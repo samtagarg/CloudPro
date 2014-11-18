@@ -1,4 +1,4 @@
-package com.cloudhsare.useroperations.webservices;
+package com.cloudshare.useroperations.webservices;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
