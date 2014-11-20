@@ -26,6 +26,8 @@ public class CloudShareListener implements ServletContextListener {
 				"privateKey",
 				arg0.getServletContext().getRealPath(
 						"/WEB-INF/classes/private.key"));
+		System.setProperty("emailTemplates", arg0.getServletContext()
+				.getRealPath("/WEB-INF/classes"));
 	}
 
 	/**
