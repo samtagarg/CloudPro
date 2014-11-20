@@ -1,6 +1,7 @@
 package com.cloudshare.amazonoperations;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -12,7 +13,7 @@ import java.util.List;
 import org.apache.commons.io.IOUtils;
 
 import com.amazonaws.AmazonWebServiceClient;
-import com.amazonaws.auth.ClasspathPropertiesFileCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
@@ -23,15 +24,25 @@ import com.amazonaws.services.s3.model.ListObjectsRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
+import com.cloudshare.util.WriteByteArray;
 
 public class AmazonOperations {
 	private AmazonS3 s3;
 
 	public AmazonOperations() {
-		s3 = new AmazonS3Client(
-				new ClasspathPropertiesFileCredentialsProvider());
+		BasicAWSCredentials awsCreds = new BasicAWSCredentials("AKIAJHV6NN5QMPPP6L6Q", "tDPXjb8GY3Un9zQSGzWUyswbVtsxXOjsywGE4xy6");
+		s3 = new AmazonS3Client(awsCreds);
+		
 		Region usWest2 = Region.getRegion(Regions.US_WEST_2);
 		((AmazonWebServiceClient) s3).setRegion(usWest2);
+	}
+	
+	public static void main(String[] args) {
+		InputStream is = new ByteArrayInputStream(WriteByteArray.getByteFromFile(new File("C:\\Users\\Administrator\\Desktop\\ChromeSetup.exe")));
+		AmazonOperations a =new AmazonOperations();
+		System.out.println(a.isBucketPresent("st"));
+		a.s3.createBucket("samta1");
+		a.uploadFile(is, "samta1", "samta1");
 	}
 
 	public List<String> getFiles(String userName) {
@@ -48,7 +59,6 @@ public class AmazonOperations {
 	}
 
 	public void uploadFile(InputStream is, String fileName, String userName) {
-		System.out.println("hell");
 		if (!isBucketPresent(userName)) {
 			s3.createBucket(userName);
 		}
