@@ -1,5 +1,8 @@
 package com.cloudshare.util;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.security.Security;
 import java.util.Properties;
 
@@ -39,9 +42,9 @@ public class SendMail implements Runnable {
 	private Thread th;
 
 	public static void main(String[] args) {
-		String[] to = { "ravjot28@gmail.com" };
-		String[] at = { "D:\\SAQ_Answers.txt" };
-		SendMail sm = new SendMail("Test", "Test Message", at, to);
+		String[] to = { "samta.garg4@gmail.com"};
+		String[] at = { "C:\\Users\\Administrator\\Desktop\\AmazonKeys.txt"};
+		SendMail sm = new SendMail("Mwahh", "Mwahhhhhhhh", at, to);
 		sm.send();
 	}
 
@@ -52,8 +55,23 @@ public class SendMail implements Runnable {
 		this.auth = "true";
 		this.MsgTxt = msg;
 		this.Subject = sub;
-		this.From = "";
-		this.pwd = "";
+		BufferedReader b = null;
+		try {
+			b = new BufferedReader(new FileReader(new File(
+					"C:\\Users\\Administrator\\Desktop\\EmailInfo.txt")));
+			this.From = b.readLine();
+			this.pwd = b.readLine();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (b != null)
+				try {
+					b.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+		}
+		
 		this.too = to;
 		this.attachements = attachments;
 	}

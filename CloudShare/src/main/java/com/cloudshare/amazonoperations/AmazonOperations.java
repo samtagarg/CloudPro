@@ -1,10 +1,12 @@
 package com.cloudshare.amazonoperations;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -30,19 +32,40 @@ public class AmazonOperations {
 	private AmazonS3 s3;
 
 	public AmazonOperations() {
-		BasicAWSCredentials awsCreds = new BasicAWSCredentials("AKIAJHV6NN5QMPPP6L6Q", "tDPXjb8GY3Un9zQSGzWUyswbVtsxXOjsywGE4xy6");
+		BufferedReader b = null;
+		String accessKey = null;
+		String secretKey = null;
+		try {
+			b = new BufferedReader(new FileReader(new File(
+					"C:\\Users\\Administrator\\Desktop\\AmazonKeys.txt")));
+			accessKey = b.readLine();
+			secretKey = b.readLine();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (b != null)
+				try {
+					b.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+		}
+		BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKey,
+				secretKey);
 		s3 = new AmazonS3Client(awsCreds);
-		
+
 		Region usWest2 = Region.getRegion(Regions.US_WEST_2);
 		((AmazonWebServiceClient) s3).setRegion(usWest2);
 	}
-	
+
 	public static void main(String[] args) {
-		InputStream is = new ByteArrayInputStream(WriteByteArray.getByteFromFile(new File("C:\\Users\\Administrator\\Desktop\\ChromeSetup.exe")));
-		AmazonOperations a =new AmazonOperations();
-		System.out.println(a.isBucketPresent("st"));
-		a.s3.createBucket("samta1");
-		a.uploadFile(is, "samta1", "samta1");
+		InputStream is = new ByteArrayInputStream(
+				WriteByteArray.getByteFromFile(new File(
+						"C:\\Users\\Administrator\\Desktop\\ChromeSetup.exe")));
+		AmazonOperations a = new AmazonOperations();
+		System.out.println(a.isBucketPresent("samta123"));
+		a.s3.createBucket("samta123");
+		a.uploadFile(is, "samta123", "samta123");
 	}
 
 	public List<String> getFiles(String userName) {
