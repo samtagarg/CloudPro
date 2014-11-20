@@ -1,4 +1,4 @@
-package com.cloudshare.useroperations.webservices;
+package com.cloudshare.cloudoperations.webservices;
 
 import javax.jws.WebService;
 import javax.xml.ws.soap.MTOM;
