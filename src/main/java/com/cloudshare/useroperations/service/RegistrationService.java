@@ -112,6 +112,7 @@ public class RegistrationService {
 			}
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			response = new RegistrationResponse();
 			response.setErrorCode("500");
 			response.setRequestStatus("FAILURE");
@@ -141,10 +142,10 @@ public class RegistrationService {
 				System.getProperty("emailTemplates"));
 		StringTemplate loginEmail = emailTemplateGroup
 				.getInstanceOf("welcomeMail");
-		loginEmail.setAttribute("EMAIL_TEMPLATE_FULLNAME_PLACE_HOLDER",
+		loginEmail.setAttribute("fullName",
 				fullName);
-		loginEmail.setAttribute("EMAIL_TEMPLATE_URL_PLACE_HOLDER", url);
-		loginEmail.setAttribute("EMAIL_TEMPLATE_FROM_PLACE_HOLDER",
+		loginEmail.setAttribute("URL", url);
+		loginEmail.setAttribute("from",
 				"Cloud Share");
 		String message = loginEmail.toString();
 

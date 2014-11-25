@@ -28,7 +28,7 @@
 
 		<!-- Drop and re-create the database schema on startup -->
 		<property name="hbm2ddl.auto">update</property>
-		<!--  <mapping class="enter the bean class" />-->
+		 <mapping class="com.cloudshare.useroperations.bean.UserBean" />
 		
 	</session-factory>
 </hibernate-configuration>

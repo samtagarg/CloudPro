@@ -49,7 +49,7 @@ public class CommonDAO implements Serializable {
 			Criteria crit = session.createCriteria(UserBean.class);
 			Criterion emailAddressRestriction = Restrictions.eq("emailAddress",
 					emailId);
-
+			System.out.println(emailId);
 			Criterion activeRestriction = Restrictions.eq("active", "Y");
 
 			LogicalExpression andExp = Restrictions.and(

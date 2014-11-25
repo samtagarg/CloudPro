@@ -43,7 +43,7 @@ public class SendMail implements Runnable {
 
 	public static void main(String[] args) {
 		String[] to = { "samta.garg4@gmail.com"};
-		String[] at = { "C:\\Users\\Administrator\\Desktop\\AmazonKeys.txt"};
+		String[] at = { "C:\\Users\\Administrator\\Desktop\\EmailInfo.txt"};
 		SendMail sm = new SendMail("Mwahh", "Mwahhhhhhhh", at, to);
 		sm.send();
 	}
