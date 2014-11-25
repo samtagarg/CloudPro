@@ -127,7 +127,7 @@ public class RegistrationService {
 	private String generateVerificationLink(int externalID)
 			throws NoSuchAlgorithmException, NoSuchPaddingException, Exception {
 		String url = null;
-		url = "http://54.69.201.204:8080/CloudShare/EmailAddressVerification?emailAddressVerificationCode="
+		url = "http://54.148.120.222:8080/CloudShare/EmailAddressVerification?emailAddressVerificationCode="
 				+ externalID;
 
 		return url;
