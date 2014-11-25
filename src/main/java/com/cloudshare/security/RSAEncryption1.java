@@ -23,10 +23,10 @@ import sun.misc.BASE64Encoder;
  * @author JavaDigest
  * 
  */
-public class RSAEncryption {
+public class RSAEncryption1 {
 
 	private static Logger logger = LoggerFactory
-			.getLogger(RSAEncryption.class);
+			.getLogger(RSAEncryption1.class);
 	public static final String ALGORITHM = "RSA";
 
 	public static final String PRIVATE_KEY_FILE = "private.key";

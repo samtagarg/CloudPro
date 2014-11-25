@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.cloudshare.dao.CommonDAO;
-import com.cloudshare.security.RSAEncryption;
 import com.cloudshare.security.SaltTextEncryption;
 import com.cloudshare.useroperations.bean.UserBean;
 import com.cloudshare.useroperations.dto.RegistrationDTO;
@@ -99,8 +98,7 @@ public class RegistrationService {
 			if (validate) {
 				commonDao = CommonDAO.getInstance();
 				SaltTextEncryption saltImpl = new SaltTextEncryption();
-				dto.setUserPassword(saltImpl.createHash(RSAEncryption
-						.decryptText(dto.getUserPassword())));
+				dto.setUserPassword(saltImpl.createHash(dto.getUserPassword()));
 				int externalId = commonDao.registerUser(dto);
 
 				response = new RegistrationResponse();
