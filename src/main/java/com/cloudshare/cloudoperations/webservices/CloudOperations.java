@@ -5,7 +5,7 @@ import javax.xml.ws.soap.MTOM;
 
 
 @MTOM
-@WebService(endpointInterface = "com.cloudhsare.useroperations.webservices.ICloudOperations", serviceName = "CloudOperationsService", portName = "CloudOperationsPort")
+@WebService(endpointInterface = "com.cloudshare.cloudoperations.webservices.ICloudOperations", serviceName = "CloudOperationsService", portName = "CloudOperationsPort")
 public class CloudOperations implements ICloudOperations {
 
 	public String uploadFile(String request) throws Exception {

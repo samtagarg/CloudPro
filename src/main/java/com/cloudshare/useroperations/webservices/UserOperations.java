@@ -3,7 +3,7 @@ package com.cloudshare.useroperations.webservices;
 import javax.jws.WebService;
 
 
-@WebService(endpointInterface = "com.cloudhsare.useroperations.webservices.IUserOperations", serviceName = "UserOperationsService", portName = "UserOperationsPort")
+@WebService(endpointInterface = "com.cloudshare.useroperations.webservices.IUserOperations", serviceName = "UserOperationsService", portName = "UserOperationsPort")
 public class UserOperations implements IUserOperations {
 
 	public String registerUser(String request) throws Exception {
