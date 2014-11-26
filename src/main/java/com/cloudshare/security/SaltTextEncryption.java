@@ -1,4 +1,5 @@
 package com.cloudshare.security;
+
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -9,17 +10,31 @@ import javax.crypto.spec.PBEKeySpec;
 
 public class SaltTextEncryption {
 
-	public static final String pbkdf2Algo = "PBKDF2WithHmacSHA1";
-	public static final int saltByteSize = 16;
-	public static final int hashByteSize = 16;
-	public static final int pbkdf2Iterations = 1000;
+	private static final String pbkdf2Algo = "PBKDF2WithHmacSHA1";
+	private static final int saltByteSize = 16;
+	private static final int hashByteSize = 16;
+	private static final int pbkdf2Iterations = 1000;
+	private static SaltTextEncryption SINGLETON;
+	private static final int iterationIndex = 0;
+	private static final int saltIndex = 1;
+	private static final int pbkdf2Index = 2;
 
-	public static final int iterationIndex = 0;
-	public static final int saltIndex = 1;
-	public static final int pbkdf2Index = 2;
+	private SaltTextEncryption() throws Exception {
+		if (SINGLETON != null) {
+			throw new Exception(SaltTextEncryption.class.getName());
+		}
+	}
 
-	public String createHash(String password)
-			throws NoSuchAlgorithmException, InvalidKeySpecException {
+	public static SaltTextEncryption getInstance() throws Exception {
+		if (SINGLETON == null)
+
+			SINGLETON = new SaltTextEncryption();
+
+		return SINGLETON;
+	}
+
+	public String createHash(String password) throws NoSuchAlgorithmException,
+			InvalidKeySpecException {
 		return createHash(password.toCharArray());
 	}
 
@@ -32,7 +47,7 @@ public class SaltTextEncryption {
 		return pbkdf2Iterations + ":" + toHex(salt) + ":" + toHex(hash);
 	}
 
-	public boolean validatePassword(String password, String correctHash)
+	public boolean validateStrings(String password, String correctHash)
 			throws NoSuchAlgorithmException, InvalidKeySpecException {
 		return validatePassword(password.toCharArray(), correctHash);
 	}
@@ -80,14 +95,14 @@ public class SaltTextEncryption {
 			return hex;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
 		try {
 			String hash = new SaltTextEncryption().createHash("apple!3401");
 			System.out.println(hash);
 
-			System.out.println(new SaltTextEncryption().validatePassword("apple!3401",
-					hash));
+			System.out.println(new SaltTextEncryption().validateStrings(
+					"apple!3401", hash));
 		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
 			e.printStackTrace();
 		}

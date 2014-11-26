@@ -97,7 +97,7 @@ public class RegistrationService {
 
 			if (validate) {
 				commonDao = CommonDAO.getInstance();
-				SaltTextEncryption saltImpl = new SaltTextEncryption();
+				SaltTextEncryption saltImpl = SaltTextEncryption.getInstance();
 				dto.setUserPassword(saltImpl.createHash(dto.getUserPassword()));
 				int externalId = commonDao.registerUser(dto);
 
@@ -126,7 +126,7 @@ public class RegistrationService {
 	private String generateVerificationLink(int externalID)
 			throws NoSuchAlgorithmException, NoSuchPaddingException, Exception {
 		String url = null;
-		url = "http://54.148.120.222:8080/CloudShare/EmailAddressVerification?emailAddressVerificationCode="
+		url = "http://54.148.233.144:8080/CloudShare/EmailAddressVerification?emailAddressVerificationCode="
 				+ externalID;
 
 		return url;
@@ -142,19 +142,17 @@ public class RegistrationService {
 				System.getProperty("emailTemplates"));
 		StringTemplate loginEmail = emailTemplateGroup
 				.getInstanceOf("welcomeMail");
-		loginEmail.setAttribute("fullName",
-				fullName);
+		loginEmail.setAttribute("fullName", fullName);
 		loginEmail.setAttribute("URL", url);
-		loginEmail.setAttribute("from",
-				"Cloud Share");
+		loginEmail.setAttribute("from", "Cloud Share");
 		String message = loginEmail.toString();
 
 		logger.info(message);
 
 		String to[] = { emailAddress };
 
-		SendMail sm = new SendMail("EMAIL_VERIFICATION_SUBJECT", message, null,
-				to);
+		SendMail sm = new SendMail("Welcome to CloudDrive Email Verification",
+				message, null, to);
 		sm.send();
 	}
 

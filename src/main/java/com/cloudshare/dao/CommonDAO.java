@@ -12,7 +12,9 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.cloudshare.useroperations.bean.CodeVerificationBean;
 import com.cloudshare.useroperations.bean.UserBean;
+import com.cloudshare.useroperations.dto.ForgotCredentialDTO;
 import com.cloudshare.useroperations.dto.RegistrationDTO;
 import com.cloudshare.util.DBConfig;
 
@@ -36,6 +38,138 @@ public class CommonDAO implements Serializable {
 		if (SINGLETON != null) {
 			throw new Exception(CommonDAO.class.getName());
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public void insertVerificationCode(ForgotCredentialDTO dto)
+			throws Exception {
+		Session session = null;
+		try {
+			if (dto.getRequestType().equals("FORGOT_PASSWORD_REQUEST_TYPE")) {
+				session = DBConfig.getSessionFactory().openSession();
+
+				session.beginTransaction();
+
+				UserBean user = getVerifiedUserInfoByEmailId(dto
+						.getUserEmailAddress());
+
+				Criteria crit = session
+						.createCriteria(CodeVerificationBean.class);
+
+				Criterion userIdRestriction = Restrictions.eq("userId",
+						user.getUserId());
+
+				crit.add(userIdRestriction);
+
+				List<CodeVerificationBean> famedenCodeVerificationList = ((List<CodeVerificationBean>) crit
+						.list());
+
+				if (famedenCodeVerificationList != null
+						&& famedenCodeVerificationList.size() > 0) {
+					CodeVerificationBean verification = famedenCodeVerificationList
+							.get(0);
+					verification.setCode(dto.getVerificationCode());
+				} else {
+					CodeVerificationBean codeVerificationBean = new CodeVerificationBean();
+					codeVerificationBean.setCode(dto.getVerificationCode());
+					codeVerificationBean.setUserId(dto.getExternalUserId());
+
+					session.save(codeVerificationBean);
+				}
+
+				session.getTransaction().commit();
+			} else {
+				throw new Exception("UNSUPPORTED_REQUEST_TYPE");
+			}
+		} catch (Exception e) {
+			if (session != null) {
+				session.getTransaction().rollback();
+			}
+			logger.error(e.getMessage(), e);
+			throw e;
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public CodeVerificationBean getVerificationCodeDetails(String emailAddress,
+			String verificationCode) throws Exception {
+		Session session = null;
+		CodeVerificationBean verification = null;
+		try {
+			session = DBConfig.getSessionFactory().openSession();
+
+			session.beginTransaction();
+			UserBean user = getVerifiedUserInfoByEmailId(emailAddress);
+
+			Criteria crit = session.createCriteria(CodeVerificationBean.class);
+
+			Criterion userIdRestriction = Restrictions.eq("userId",
+					user.getUserId());
+
+			Criterion verificationCodeRestriction = Restrictions.eq("code",
+					verificationCode);
+			LogicalExpression finalAndExp = Restrictions.and(userIdRestriction,
+					verificationCodeRestriction);
+
+			crit.add(finalAndExp);
+
+			List<CodeVerificationBean> famedenCodeVerificationList = ((List<CodeVerificationBean>) crit
+					.list());
+
+			if (famedenCodeVerificationList != null
+					&& famedenCodeVerificationList.size() > 0) {
+				verification = famedenCodeVerificationList.get(0);
+			}
+		} catch (Exception e) {
+			if (session != null) {
+				session.getTransaction().rollback();
+			}
+			logger.error(e.getMessage(), e);
+			throw e;
+
+		}
+		return verification;
+	}
+
+	@SuppressWarnings("unchecked")
+	public boolean upatePasswordByEmailId(String emailId, String password)
+			throws Exception {
+		boolean result = false;
+
+		Session session;
+		try {
+
+			UserBean user = searchByEmailId(emailId);
+			if (user != null) {
+				session = DBConfig.getSessionFactory().openSession();
+
+				session.beginTransaction();
+
+				Criteria crit = session.createCriteria(UserBean.class);
+				Criterion requestIDRestriction = Restrictions.eq("userId",
+						user.getUserId());
+				crit.add(requestIDRestriction);
+				List<UserBean> famedenUserIdsMapList = ((List<UserBean>) crit
+						.list());
+
+				if (famedenUserIdsMapList != null
+						&& famedenUserIdsMapList.size() > 0) {
+					user = famedenUserIdsMapList.get(0);
+
+					user.setPassword(password);
+					result = true;
+				}
+			} else {
+				throw new Exception("USER_DO_NOT_EXIST");
+			}
+
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+
+			throw e;
+		}
+		return result;
 	}
 
 	@SuppressWarnings("unchecked")
