@@ -11,7 +11,7 @@ import com.cloudshare.cloudoperations.webservices.model.DownloadResponse;
 import com.cloudshare.cloudoperations.webservices.model.GenerateSharingKeyRequest;
 import com.cloudshare.cloudoperations.webservices.model.GenerateSharingKeyResponse;
 import com.cloudshare.cloudoperations.webservices.model.GetFilesRequest;
-import com.cloudshare.cloudoperations.webservices.model.GetFilesResponse;
+import com.cloudshare.cloudoperations.webservices.model.GetFilesResponse1;
 import com.cloudshare.cloudoperations.webservices.model.GetSharedFileRequest;
 import com.cloudshare.cloudoperations.webservices.model.UploadRequest;
 import com.cloudshare.cloudoperations.webservices.model.UploadResponse;
@@ -123,9 +123,9 @@ public class CloudOperationsService {
 	}
 
 	private Object getFiles(GetFilesRequest request) {
-		GetFilesResponse response = null;
+		GetFilesResponse1 response = null;
 		AmazonOperations aco = new AmazonOperations();
-		response = new GetFilesResponse();
+		response = new GetFilesResponse1();
 		response.setFilesName(aco.getFiles(request.getUserName().replaceAll(
 				"@", "-")));
 		return response;

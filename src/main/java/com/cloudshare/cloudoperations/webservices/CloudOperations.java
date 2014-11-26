@@ -9,7 +9,7 @@ import com.cloudshare.cloudoperations.webservices.model.DownloadResponse;
 import com.cloudshare.cloudoperations.webservices.model.GenerateSharingKeyRequest;
 import com.cloudshare.cloudoperations.webservices.model.GenerateSharingKeyResponse;
 import com.cloudshare.cloudoperations.webservices.model.GetFilesRequest;
-import com.cloudshare.cloudoperations.webservices.model.GetFilesResponse;
+import com.cloudshare.cloudoperations.webservices.model.GetFilesResponse1;
 import com.cloudshare.cloudoperations.webservices.model.GetSharedFileRequest;
 import com.cloudshare.cloudoperations.webservices.model.UploadRequest;
 import com.cloudshare.cloudoperations.webservices.model.UploadResponse;
@@ -51,9 +51,9 @@ public class CloudOperations implements ICloudOperations {
 	}
 
 	@Override
-	public GetFilesResponse getFiles(GetFilesRequest request) {
-		GetFilesResponse response = null;
-		response = (GetFilesResponse) new CloudOperationsService()
+	public GetFilesResponse1 getFiles(GetFilesRequest request) {
+		GetFilesResponse1 response = null;
+		response = (GetFilesResponse1) new CloudOperationsService()
 				.processRequest(request);
 		return response;
 	}

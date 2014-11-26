@@ -2,7 +2,7 @@ package com.cloudshare.cloudoperations.webservices.model;
 
 import java.util.List;
 
-public class GetFilesResponse {
+public class GetFilesResponse1 {
 
 	private List<String> filesName;
 

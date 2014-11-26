@@ -10,7 +10,7 @@ import com.cloudshare.cloudoperations.webservices.model.DownloadResponse;
 import com.cloudshare.cloudoperations.webservices.model.GenerateSharingKeyRequest;
 import com.cloudshare.cloudoperations.webservices.model.GenerateSharingKeyResponse;
 import com.cloudshare.cloudoperations.webservices.model.GetFilesRequest;
-import com.cloudshare.cloudoperations.webservices.model.GetFilesResponse;
+import com.cloudshare.cloudoperations.webservices.model.GetFilesResponse1;
 import com.cloudshare.cloudoperations.webservices.model.GetSharedFileRequest;
 import com.cloudshare.cloudoperations.webservices.model.UploadRequest;
 import com.cloudshare.cloudoperations.webservices.model.UploadResponse;
@@ -31,7 +31,7 @@ public interface ICloudOperations {
 
 	@WebMethod(operationName = "GetFiles")
 	@WebResult(name = "GetFilesResponse1")
-	public GetFilesResponse getFiles(
+	public GetFilesResponse1 getFiles(
 			@WebParam(name = "GetFilesRequest") GetFilesRequest request);
 
 	@WebMethod(operationName = "GetFileShareKey")
