@@ -61,10 +61,10 @@ public class AmazonOperations {
 	public static void main(String[] args) {
 		InputStream is = new ByteArrayInputStream(
 				WriteByteArray.getByteFromFile(new File(
-						"C:\\Users\\Administrator\\Desktop\\ChromeSetup.exe")));
+						"C:\\Users\\Administrator\\Desktop\\Temp.txt")));
 		AmazonOperations a = new AmazonOperations();
 		System.out.println(a.isBucketPresent("samta123"));
-		a.s3.createBucket("samta123");
+		//a.s3.createBucket("samta123");
 		a.uploadFile(is, "samta123", "samta123");
 	}
 
