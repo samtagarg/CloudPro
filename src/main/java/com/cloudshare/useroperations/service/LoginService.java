@@ -60,8 +60,8 @@ public class LoginService {
 				UserBean user = dao.searchByEmailId(((LoginDTO) dto)
 						.getUserEmailAddress());
 				if (user != null) {
-					boolean result = authenticateUser((LoginDTO) dto,
-							user.getPassword());
+					boolean result = authenticateUser(
+							((LoginDTO) dto).getPassword(), user.getPassword());
 					if (result) {
 						response = new LoginResponse();
 						response.setFullName(user.getUserName());
@@ -84,9 +84,8 @@ public class LoginService {
 		return response;
 	}
 
-	public boolean authenticateUser(LoginDTO dto, String actualPassword)
+	public boolean authenticateUser(String password, String actualPassword)
 			throws Exception {
-		String password = dto.getPassword();
 		try {
 
 			SaltTextEncryption salt = SaltTextEncryption.getInstance();

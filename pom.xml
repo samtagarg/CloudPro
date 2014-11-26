@@ -12,7 +12,21 @@
 		<jaxws.plugin.version>2.1</jaxws.plugin.version>
 	</properties>
 
+	<repositories><!-- In Project repository -->
+		<repository>
+			<id>in-project</id>
+			<name>In Project Repo</name>
+			<url>file://${basedir}/src/main/resources/libs</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
+
+		<dependency>
+			<groupId>RavBase64</groupId>
+			<artifactId>RavBase64-API</artifactId>
+			<version>1.0</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.antlr</groupId>
