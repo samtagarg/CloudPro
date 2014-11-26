@@ -179,7 +179,7 @@ public class CloudOperationsService {
 				boolean result = LoginService.getInstance().authenticateUser(
 						request.getPassword(), user.getPassword());
 
-				if (result) {
+				if (!result) {
 					response.setStatus("FAILURE");
 					response.setErrorMessage("Either User doesnt exists or the credentials are incorrect");
 				} else {

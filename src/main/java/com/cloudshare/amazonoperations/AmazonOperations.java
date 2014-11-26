@@ -85,6 +85,7 @@ public class AmazonOperations {
 	}
 
 	public void uploadFile(InputStream is, String fileName, String userName) {
+		System.out.println("UploadFile "+userName+" "+fileName);
 		if (!isBucketPresent(userName)) {
 			s3.createBucket(userName);
 		}
