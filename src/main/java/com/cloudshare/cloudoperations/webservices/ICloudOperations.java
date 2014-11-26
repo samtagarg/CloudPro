@@ -30,7 +30,7 @@ public interface ICloudOperations {
 			@WebParam(name = "DownloadFileRequest") DownloadRequest request);
 
 	@WebMethod(operationName = "GetFiles")
-	@WebResult(name = "GetFilesResponse")
+	@WebResult(name = "GetFilesResponse1")
 	public GetFilesResponse getFiles(
 			@WebParam(name = "GetFilesRequest") GetFilesRequest request);
 
