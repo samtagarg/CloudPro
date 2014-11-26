@@ -64,19 +64,22 @@ public class AmazonOperations {
 						"C:\\Users\\Administrator\\Desktop\\Temp.txt")));
 		AmazonOperations a = new AmazonOperations();
 		System.out.println(a.isBucketPresent("samta123"));
-		//a.s3.createBucket("samta123");
+		// a.s3.createBucket("samta123");
 		a.uploadFile(is, "samta123", "samta123");
 	}
 
 	public List<String> getFiles(String userName) {
 		List<String> list = null;
-		ObjectListing bucketList = s3.listObjects(new ListObjectsRequest()
-				.withBucketName(userName));
-		if (bucketList != null) {
-			list = new ArrayList<String>();
-		}
-		for (S3ObjectSummary objectSummary : bucketList.getObjectSummaries()) {
-			list.add(objectSummary.getKey());
+		if (isBucketPresent(userName)) {
+			ObjectListing bucketList = s3.listObjects(new ListObjectsRequest()
+					.withBucketName(userName));
+			if (bucketList != null) {
+				list = new ArrayList<String>();
+			}
+			for (S3ObjectSummary objectSummary : bucketList
+					.getObjectSummaries()) {
+				list.add(objectSummary.getKey());
+			}
 		}
 		return list;
 	}
